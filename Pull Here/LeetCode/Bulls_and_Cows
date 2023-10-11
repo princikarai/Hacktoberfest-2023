@@ -1,0 +1,28 @@
+//LEETCODE LINK : https://leetcode.com/problems/bulls-and-cows/
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        int abull = 0;
+        int acow = 0;
+        vector<int> freq(10, 0);  // To count digit occurrences in secret
+        
+        for (int i = 0; i < guess.length(); i++) {
+            if (secret[i] == guess[i]) {
+                abull++;
+            } else {
+                // Update frequency count of secret digits
+                freq[secret[i] - '0']++;
+            }
+        }
+        
+        for (int i = 0; i < guess.length(); i++) {
+            if (secret[i] != guess[i] && freq[guess[i] - '0'] > 0) {
+                acow++;
+                freq[guess[i] - '0']--;
+            }
+        }
+        
+        string result = to_string(abull) + "A" + to_string(acow) + "B";
+        return result;
+    }
+};
